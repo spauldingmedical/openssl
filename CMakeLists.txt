@@ -72,38 +72,6 @@ set(VERSION_STRING ${OPENSSL_VERSION})
 set(LIB_VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
 set(LIB_SOVERSION ${VERSION_MAJOR}.${VERSION_MINOR})
 
-add_definitions(-DOPENSSL_NO_ASM)
-add_definitions(-DOPENSSL_NO_STATIC_ENGINE)
-
-if(WIN32)
-	set(OPENSSLDIR "C:/ssl")
-	set(ENGINESDIR "C:/engines-1.1")
-else()
-	set(OPENSSLDIR "/usr/local/ssl")
-	set(ENGINESDIR "/usr/local/engines-1.1")
-endif()
-add_definitions("-DOPENSSLDIR=\"${OPENSSLDIR}\"")
-add_definitions("-DENGINESDIR=\"${ENGINESDIR}\"")
-
-if(APPLE)
-	set(CMAKE_MACOSX_RPATH ON)
-	add_definitions(-DOPENSSL_SYSNAME_MACOSX)
-endif()
-
-if(WIN32)
-	set(CMAKE_SHARED_LIBRARY_PREFIX "lib")
-	set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
-
-	add_definitions(-DOPENSSL_SYSNAME_WIN32)
-	add_definitions(-DWIN32_LEAN_AND_MEAN)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-
-	if(BUILD_SHARED_OPENSSL)
-		# avoid conflict: ocsp.h and wincrypt.h
-		add_definitions(-D_WINDLL)
-	endif()
-endif()
-
 include(CheckTypeSize)
 check_type_size("long" LONG_INT)
 check_type_size("long long" LONG_LONG_INT)
