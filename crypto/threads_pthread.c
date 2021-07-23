@@ -7,6 +7,12 @@
  * https://www.openssl.org/source/license.html
  */
 
+/* https://github.com/openssl/openssl/issues/10966 */
+# if !defined(_XOPEN_SOURCE) || _XOPEN_SOURCE < 500
+#  undef _XOPEN_SOURCE
+#  define _XOPEN_SOURCE 500
+# endif
+
 #include <openssl/crypto.h>
 #include "internal/cryptlib.h"
 
